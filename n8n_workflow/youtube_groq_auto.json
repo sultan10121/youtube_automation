@@ -1,0 +1,63 @@
+{
+  "name": "YouTube Upload Trigger",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "youtube-upload",
+        "httpMethod": "POST",
+        "responseMode": "lastNode"
+      },
+      "id": "webhook1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{\n  json: {\n    status: \"success\",\n    message: \"Received data from Python\",\n    data: $json\n  }\n}];"
+      },
+      "id": "function1",
+      "name": "Process Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [550, 300]
+    },
+    {
+      "parameters": {
+        "responseData": "allEntries"
+      },
+      "id": "respond1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [800, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {}
+}
