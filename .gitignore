@@ -3,4 +3,4 @@ venv/
 __pycache__/
 *.pyc
 assets/temp/
-*.mp4
+*.mp4.env
